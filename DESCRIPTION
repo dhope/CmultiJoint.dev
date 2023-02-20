@@ -1,0 +1,15 @@
+Package: IlesShowUSomething
+Type: Package
+Title: What the package does (short line)
+Version: 0.0.1
+Date: 2023-02-19
+Author: Who wrote it
+Maintainer: Who to complain to
+      <yourfault@somewhere.net>
+Description: More about what it does (maybe more than
+      one line)
+License: What license is it under?
+Imports: 
+    Rcpp (>= 1.0.9)
+LinkingTo: Rcpp, RcppArmadillo, RcppEigen,RcppNumerical, RcppNumerical
+RoxygenNote: 7.2.2
