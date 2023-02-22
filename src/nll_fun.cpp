@@ -53,12 +53,12 @@ public:
 
 
 
-Rcpp::List  calc_p_mat(const double tau_k, const double phi_k,
+Rcpp::List  calc_p_mat(const double& tau_k, const double& phi_k,
                        // arma::mat Y_mat_slice,
-                       int nrint_k, int ntint_k,
-                       arma::rowvec tarray_k,
-                       arma::rowvec rarray_k,
-                       double max_r_k
+                       const int& nrint_k, const int& ntint_k,
+                       const arma::rowvec& tarray_k,
+                       const arma::rowvec& rarray_k,
+                       const double& max_r_k
 ){
 
   Rcpp::NumericMatrix CDF_binned(nrint_k, ntint_k);//nrint[k],ntint[k]);
@@ -122,20 +122,6 @@ Rcpp::List  calc_p_mat(const double tau_k, const double phi_k,
 }
 
 
-arma::mat calculateY(int k, arma::cube Yarray, Rcpp::NumericVector nrint, Rcpp::NumericVector ntint){
-  arma::mat Y_( nrint[k],ntint[k] );
-  for(int i = 0; i < nrint[k]; ++i){
-    for(int j = 0; j < ntint[k]; ++j){
-      int z = Yarray(i,j,k);
-      Y_(i,j) = z;
-      
-    }
-    
-  }
-  return Y_;
-}
-
-
 //' Negative log likelihood function
 //' 
 //' A function to calculate negative log likelihood.
@@ -157,7 +143,7 @@ arma::mat calculateY(int k, arma::cube Yarray, Rcpp::NumericVector nrint, Rcpp::
 // [[Rcpp::export]]
 double nll_fun(Rcpp::NumericVector params, arma::mat X1, arma::mat X2,
              Rcpp::StringVector  tau_params, int nsurvey,
-             arma::cube Yarray,
+             const arma::cube Yarray,
              arma::mat tarray,
              arma::mat rarray,
              Rcpp::NumericVector nrint,
@@ -171,43 +157,30 @@ double nll_fun(Rcpp::NumericVector params, arma::mat X1, arma::mat X2,
   Rcpp::NumericVector subset_phi = params[Rcpp::Range(tau_params.size(), params.size()-1)];
   arma::vec sub_v_phi = Rcpp::as<arma::vec>(subset_phi);
 
-  // std::cout<< arma::size(Yarray) << std::endl;
   arma::vec tau = exp(X1 * sub_v );
   arma::vec phi = exp(X2 * sub_v_phi );
 
+  
+  
   Rcpp::NumericVector nll(nsurvey);
   // std::cout<< "Starting Loop" <<std::endl;
   for(int k = 0; k < nsurvey; ++k){
-        // std::cout<< k <<std::endl;
-        // Call to duplicate calls
-        const double tau_k=tau(k);
-        // std::cout<< "tau ";
-        const double phi_k=phi(k);
-        // std::cout<< "phi ";
-        int nrint_k=nrint(k);
-        // std::cout<< "nrint ";
-        int ntint_k=ntint(k);
-        // std::cout<< "ntint ";
-        arma::rowvec tarray_k=tarray.row(k);
-        // std::cout<< "tarray ";
-        arma::rowvec rarray_k=rarray.row(k);
-        // std::cout<< "rarray ";
-        double max_r_k=max_r(k);
-        // std::cout<< "max_r ";
-        Rcpp::List pmat_out = calc_p_mat(tau_k, 
-                                         phi_k,
-                                        nrint_k, 
-                                         ntint_k,
-                                         tarray_k,
-                                         rarray_k,
-                                         max_r_k
+        Rcpp::List pmat_out = calc_p_mat(tau(k), 
+                                         phi(k),
+                                        nrint(k), 
+                                         ntint(k),
+                                         tarray.row(k),
+                                         rarray.row(k),
+                                         max_r(k)
         );
         
           Rcpp::NumericMatrix p_matrix = pmat_out["p_matrix"];
           double sum_p_matrix = pmat_out["sum_p_matrix"];
           
           // Calculate Y 
-          arma::mat Y = calculateY(k,Yarray, nrint, ntint);
+          // arma::mat Y = calculateY(k,Yarray,nsurvey, nrint, ntint);
+          arma::mat Y = Yarray.slice(k);
+          Y.reshape(nrint(k),ntint(k) );
     
 
         

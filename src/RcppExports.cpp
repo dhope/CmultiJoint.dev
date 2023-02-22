@@ -26,7 +26,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // nll_fun
-double nll_fun(Rcpp::NumericVector params, arma::mat X1, arma::mat X2, Rcpp::StringVector tau_params, int nsurvey, arma::cube Yarray, arma::mat tarray, arma::mat rarray, Rcpp::NumericVector nrint, Rcpp::NumericVector ntint, Rcpp::NumericVector max_r, Rcpp::NumericVector Ysum, Rcpp::NumericVector nlimit);
+double nll_fun(Rcpp::NumericVector params, arma::mat X1, arma::mat X2, Rcpp::StringVector tau_params, int nsurvey, const arma::cube Yarray, arma::mat tarray, arma::mat rarray, Rcpp::NumericVector nrint, Rcpp::NumericVector ntint, Rcpp::NumericVector max_r, Rcpp::NumericVector Ysum, Rcpp::NumericVector nlimit);
 RcppExport SEXP _IlesShowUSomething_nll_fun(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -36,7 +36,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type X2(X2SEXP);
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type tau_params(tau_paramsSEXP);
     Rcpp::traits::input_parameter< int >::type nsurvey(nsurveySEXP);
-    Rcpp::traits::input_parameter< arma::cube >::type Yarray(YarraySEXP);
+    Rcpp::traits::input_parameter< const arma::cube >::type Yarray(YarraySEXP);
     Rcpp::traits::input_parameter< arma::mat >::type tarray(tarraySEXP);
     Rcpp::traits::input_parameter< arma::mat >::type rarray(rarraySEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nrint(nrintSEXP);
