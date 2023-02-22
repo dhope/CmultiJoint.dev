@@ -36,3 +36,7 @@ nll_fun <- function(params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray,
     .Call(`_IlesShowUSomething_nll_fun`, params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit)
 }
 
+runit <- function(k, Yarray, nrint, ntint) {
+    .Call(`_IlesShowUSomething_runit`, k, Yarray, nrint, ntint)
+}
+

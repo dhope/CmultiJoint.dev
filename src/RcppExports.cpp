@@ -13,14 +13,14 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // logdmultinomCPP
-double logdmultinomCPP(Rcpp::NumericMatrix x, double size, Rcpp::NumericMatrix prob);
+double logdmultinomCPP(arma::mat x, double size, arma::mat prob);
 RcppExport SEXP _IlesShowUSomething_logdmultinomCPP(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
     Rcpp::traits::input_parameter< double >::type size(sizeSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type prob(probSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type prob(probSEXP);
     rcpp_result_gen = Rcpp::wrap(logdmultinomCPP(x, size, prob));
     return rcpp_result_gen;
 END_RCPP
@@ -48,10 +48,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// runit
+int runit(int k, arma::cube Yarray, Rcpp::NumericVector nrint, Rcpp::NumericVector ntint);
+RcppExport SEXP _IlesShowUSomething_runit(SEXP kSEXP, SEXP YarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< arma::cube >::type Yarray(YarraySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nrint(nrintSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type ntint(ntintSEXP);
+    rcpp_result_gen = Rcpp::wrap(runit(k, Yarray, nrint, ntint));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_IlesShowUSomething_logdmultinomCPP", (DL_FUNC) &_IlesShowUSomething_logdmultinomCPP, 3},
     {"_IlesShowUSomething_nll_fun", (DL_FUNC) &_IlesShowUSomething_nll_fun, 13},
+    {"_IlesShowUSomething_runit", (DL_FUNC) &_IlesShowUSomething_runit, 4},
     {NULL, NULL, 0}
 };
 

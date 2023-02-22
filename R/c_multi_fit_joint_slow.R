@@ -36,6 +36,7 @@ cmulti_fit_joint_slow <- function (Yarray, # Array with dimensions (nsurvey x nr
   Ysum <- apply(Yarray,1,sum,na.rm = TRUE)
   Ykeep <- which(Ysum > 0)
   if (length(Ykeep) != length(Ysum)){
+    Ysum <- Ysum[Ykeep]
     Yarray <- Yarray[Ykeep, , ]
     rarray<- rarray[Ykeep, ]
     tarray<- tarray[Ykeep, ]
@@ -146,7 +147,7 @@ cmulti_fit_joint_slow <- function (Yarray, # Array with dimensions (nsurvey x nr
     
     # browser()
     nll <- -sum(nll)
-    if (nll %in% c(NA, NaN, Inf, -Inf)) browser()#nlimit[2] 
+    if (nll %in% c(NA, NaN, Inf, -Inf)) nlimit[2] 
     else nll
   }
   

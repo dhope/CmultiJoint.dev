@@ -39,6 +39,7 @@ cmulti_fit_joint <- function (Yarray, # Array with dimensions (nsurvey x nrint x
   Ysum <- apply(Yarray,1,sum,na.rm = TRUE)
   Ykeep <- which(Ysum > 0)
   if (length(Ykeep) != length(Ysum)){
+    Ysum <- Ysum[Ykeep]
     Yarray <- Yarray[Ykeep, , ]
     rarray<- rarray[Ykeep, ]
     tarray<- tarray[Ykeep, ]
