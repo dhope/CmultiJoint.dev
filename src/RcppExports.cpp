@@ -14,7 +14,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // logdmultinomCPP
 double logdmultinomCPP(arma::imat x, double size, arma::mat prob);
-RcppExport SEXP _IlesShowUSomething_logdmultinomCPP(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP) {
+RcppExport SEXP _cmult_joint_dev_logdmultinomCPP(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -27,7 +27,7 @@ END_RCPP
 }
 // optim_rcpp
 Rcpp::List optim_rcpp(arma::vec& params, const arma::mat& X1, const arma::mat& X2, const Rcpp::StringVector& tau_params, const int& nsurvey, const arma::cube& Yarray, const arma::mat& tarray, const arma::mat& rarray, const arma::ivec& nrint, const arma::ivec& ntint, const arma::vec& max_r, const arma::ivec& Ysum, const arma::vec& nlimit, const Rcpp::String method);
-RcppExport SEXP _IlesShowUSomething_optim_rcpp(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP, SEXP methodSEXP) {
+RcppExport SEXP _cmult_joint_dev_optim_rcpp(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -51,7 +51,7 @@ END_RCPP
 }
 // runit
 int runit(int k, arma::cube Yarray, Rcpp::NumericVector nrint, Rcpp::NumericVector ntint);
-RcppExport SEXP _IlesShowUSomething_runit(SEXP kSEXP, SEXP YarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP) {
+RcppExport SEXP _cmult_joint_dev_runit(SEXP kSEXP, SEXP YarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -65,13 +65,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_IlesShowUSomething_logdmultinomCPP", (DL_FUNC) &_IlesShowUSomething_logdmultinomCPP, 3},
-    {"_IlesShowUSomething_optim_rcpp", (DL_FUNC) &_IlesShowUSomething_optim_rcpp, 14},
-    {"_IlesShowUSomething_runit", (DL_FUNC) &_IlesShowUSomething_runit, 4},
+    {"_cmult_joint_dev_logdmultinomCPP", (DL_FUNC) &_cmult_joint_dev_logdmultinomCPP, 3},
+    {"_cmult_joint_dev_optim_rcpp", (DL_FUNC) &_cmult_joint_dev_optim_rcpp, 14},
+    {"_cmult_joint_dev_runit", (DL_FUNC) &_cmult_joint_dev_runit, 4},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_IlesShowUSomething(DllInfo *dll) {
+RcppExport void R_init_cmult_joint_dev(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

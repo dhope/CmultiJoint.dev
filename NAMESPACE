@@ -1,3 +1,3 @@
-useDynLib(IlesShowUSomething, .registration=TRUE)
+useDynLib(cmult_joint_dev, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
 exportPattern("^[[:alpha:]]+")

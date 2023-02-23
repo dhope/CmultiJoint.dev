@@ -1,25 +1,25 @@
-\name{IlesShowUSomething-package}
-\alias{IlesShowUSomething-package}
-\alias{IlesShowUSomething}
+\name{cmult_joint_dev-package}
+\alias{cmult_joint_dev-package}
+\alias{cmult_joint_dev}
 \docType{package}
 \title{
-\packageTitle{IlesShowUSomething}
+\packageTitle{cmult_joint_dev}
 }
 \description{
-\packageDescription{IlesShowUSomething}
+\packageDescription{cmult_joint_dev}
 }
 \details{
 
 The DESCRIPTION file:
-\packageDESCRIPTION{IlesShowUSomething}
-\packageIndices{IlesShowUSomething}
+\packageDESCRIPTION{cmult_joint_dev}
+\packageIndices{cmult_joint_dev}
 ~~ An overview of how to use the package, including the ~~
 ~~ most important functions ~~
 }
 \author{
-\packageAuthor{IlesShowUSomething}
+\packageAuthor{cmult_joint_dev}
 
-Maintainer: \packageMaintainer{IlesShowUSomething}
+Maintainer: \packageMaintainer{cmult_joint_dev}
 }
 \references{
 ~~ Literature or other references for background information ~~

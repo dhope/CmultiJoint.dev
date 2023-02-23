@@ -1,6 +1,6 @@
 # package.R
 
-#' IlesShowUSomething
+#' cmult_joint_dev
 #' 
 #' Description of your package
 #' 

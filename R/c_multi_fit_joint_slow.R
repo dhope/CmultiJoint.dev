@@ -1,5 +1,5 @@
 
-#' cmulti_fit_joint_slow
+#' cmulti_fit_joint_withR
 #'
 #' @param Yarray 
 #' @param rarray 
@@ -13,7 +13,7 @@
 #' @param ... 
 #'
 #' @return
-cmulti_fit_joint_slow <- function (Yarray, # Array with dimensions (nsurvey x nrint x ntint)
+cmulti_fit_joint_withR <- function (Yarray, # Array with dimensions (nsurvey x nrint x ntint)
                               rarray, # distance intervals for each point count
                               tarray, # time intervals for each point count
                               X1 = NULL,     # Design matrix for distance modeling

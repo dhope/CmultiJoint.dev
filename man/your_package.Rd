@@ -3,7 +3,7 @@
 \docType{package}
 \name{your_package}
 \alias{your_package}
-\title{IlesShowUSomething}
+\title{cmult_joint_dev}
 \description{
 Description of your package
 }
