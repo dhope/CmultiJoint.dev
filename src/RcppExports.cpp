@@ -13,38 +13,39 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // logdmultinomCPP
-double logdmultinomCPP(arma::mat x, double size, arma::mat prob);
+double logdmultinomCPP(arma::imat x, double size, arma::mat prob);
 RcppExport SEXP _IlesShowUSomething_logdmultinomCPP(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::imat >::type x(xSEXP);
     Rcpp::traits::input_parameter< double >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type prob(probSEXP);
     rcpp_result_gen = Rcpp::wrap(logdmultinomCPP(x, size, prob));
     return rcpp_result_gen;
 END_RCPP
 }
-// nll_fun
-double nll_fun(Rcpp::NumericVector params, arma::mat X1, arma::mat X2, Rcpp::StringVector tau_params, int nsurvey, const arma::cube Yarray, arma::mat tarray, arma::mat rarray, Rcpp::NumericVector nrint, Rcpp::NumericVector ntint, Rcpp::NumericVector max_r, Rcpp::NumericVector Ysum, Rcpp::NumericVector nlimit);
-RcppExport SEXP _IlesShowUSomething_nll_fun(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP) {
+// optim_rcpp
+Rcpp::List optim_rcpp(arma::vec& params, const arma::mat& X1, const arma::mat& X2, const Rcpp::StringVector& tau_params, const int& nsurvey, const arma::cube& Yarray, const arma::mat& tarray, const arma::mat& rarray, const arma::ivec& nrint, const arma::ivec& ntint, const arma::vec& max_r, const arma::ivec& Ysum, const arma::vec& nlimit, const Rcpp::String method);
+RcppExport SEXP _IlesShowUSomething_optim_rcpp(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type X1(X1SEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type X2(X2SEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type tau_params(tau_paramsSEXP);
-    Rcpp::traits::input_parameter< int >::type nsurvey(nsurveySEXP);
-    Rcpp::traits::input_parameter< const arma::cube >::type Yarray(YarraySEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type tarray(tarraySEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type rarray(rarraySEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nrint(nrintSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type ntint(ntintSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type max_r(max_rSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type Ysum(YsumSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nlimit(nlimitSEXP);
-    rcpp_result_gen = Rcpp::wrap(nll_fun(params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit));
+    Rcpp::traits::input_parameter< arma::vec& >::type params(paramsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X1(X1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X2(X2SEXP);
+    Rcpp::traits::input_parameter< const Rcpp::StringVector& >::type tau_params(tau_paramsSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nsurvey(nsurveySEXP);
+    Rcpp::traits::input_parameter< const arma::cube& >::type Yarray(YarraySEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type tarray(tarraySEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type rarray(rarraySEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type nrint(nrintSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type ntint(ntintSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type max_r(max_rSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ysum(YsumSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type nlimit(nlimitSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::String >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(optim_rcpp(params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -65,7 +66,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_IlesShowUSomething_logdmultinomCPP", (DL_FUNC) &_IlesShowUSomething_logdmultinomCPP, 3},
-    {"_IlesShowUSomething_nll_fun", (DL_FUNC) &_IlesShowUSomething_nll_fun, 13},
+    {"_IlesShowUSomething_optim_rcpp", (DL_FUNC) &_IlesShowUSomething_optim_rcpp, 14},
     {"_IlesShowUSomething_runit", (DL_FUNC) &_IlesShowUSomething_runit, 4},
     {NULL, NULL, 0}
 };

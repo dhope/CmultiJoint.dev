@@ -83,24 +83,40 @@ cmulti_fit_joint <- function (Yarray, # Array with dimensions (nsurvey x nrint x
   }
   
   inits <- c(tau_inits,phi_inits)
+  
+  
 
 
   nlimit <- c(.Machine$double.xmin, .Machine$double.xmax)^(1/3)
   Yarray_x = aperm(Yarray, c(2,3,1))
-  res <- optim(inits, nll_fun, method = method, hessian = TRUE,
-               X1=X1, X2=X2, tau_params=tau_params, nsurvey=nsurvey, 
-               Yarray = Yarray_x,tarray= tarray, rarray=rarray, 
-               nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit)
+  res <- optim_rcpp(inits, method = method, 
+                    X1=X1, X2=X2, tau_params=tau_params, nsurvey=nsurvey, 
+                    Yarray = Yarray_x,tarray= tarray, rarray=rarray, 
+                    nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit)
+    # browser()
+    
+    # optim(inits, nll_fun, method = method, hessian = TRUE,
+    #            X1=X1, X2=X2, tau_params=tau_params, nsurvey=nsurvey, 
+    #            Yarray = Yarray_x,tarray= tarray, rarray=rarray, 
+    #            nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit)
   
   rval <- list(input_data = input_data,
                coefficients = res$par, 
-               #vcov = try(.solvenear(res$hessian)), 
+               vcov = try(.solvenear(res$hessian)),
                loglik = -res$value)
   
-  #if (inherits(rval$vcov, "try-error")) rval$vcov <- matrix(NA, length(rval$coefficients), length(rval$coefficients))
+  if (inherits(rval$vcov, "try-error")) rval$vcov <- matrix(NA, length(rval$coefficients), length(rval$coefficients))
   rval$coefficients <- unname(rval$coefficients)
   rval$vcov <- unname(rval$vcov)
   rval$results <- res
   rval
 }
 
+
+## robust matrix inversion (from detect package)
+.solvenear <- function(x) {
+  xinv <- try(solve(x), silent = TRUE)
+  if (inherits(xinv, "try-error"))
+    xinv <- as.matrix(solve(Matrix::nearPD(x)$mat))
+  xinv
+}
