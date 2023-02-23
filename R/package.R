@@ -1,6 +1,6 @@
 # package.R
 
-#' cmulti_joint_dev
+#' CmultiJoint.dev
 #' 
 #' Description of your package
 #' 

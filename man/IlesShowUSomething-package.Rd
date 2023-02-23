@@ -1,25 +1,25 @@
-\name{cmulti_joint_dev-package}
-\alias{cmulti_joint_dev-package}
-\alias{cmulti_joint_dev}
+\name{CmultiJoint.dev-package}
+\alias{CmultiJoint.dev-package}
+\alias{CmultiJoint.dev}
 \docType{package}
 \title{
-\packageTitle{cmulti_joint_dev}
+\packageTitle{CmultiJoint.dev}
 }
 \description{
-\packageDescription{cmulti_joint_dev}
+\packageDescription{CmultiJoint.dev}
 }
 \details{
 
 The DESCRIPTION file:
-\packageDESCRIPTION{cmulti_joint_dev}
-\packageIndices{cmulti_joint_dev}
+\packageDESCRIPTION{CmultiJoint.dev}
+\packageIndices{CmultiJoint.dev}
 ~~ An overview of how to use the package, including the ~~
 ~~ most important functions ~~
 }
 \author{
-\packageAuthor{cmulti_joint_dev}
+\packageAuthor{CmultiJoint.dev}
 
-Maintainer: \packageMaintainer{cmulti_joint_dev}
+Maintainer: \packageMaintainer{CmultiJoint.dev}
 }
 \references{
 ~~ Literature or other references for background information ~~
