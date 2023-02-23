@@ -47,3 +47,10 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# CPP build files
+src/Makevars
+src/*.o
+src/*.so
+src/*.dll
+*tar.gz

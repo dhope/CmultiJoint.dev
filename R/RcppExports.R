@@ -30,14 +30,14 @@ NULL
 #' @param prob A Matrix
 #' @export
 logdmultinomCPP <- function(x, size, prob) {
-    .Call(`_CmultiJoint.dev_logdmultinomCPP`, x, size, prob)
+    .Call(`_CmultiJoint_dev_logdmultinomCPP`, x, size, prob)
 }
 
 optim_rcpp <- function(params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit, method) {
-    .Call(`_CmultiJoint.dev_optim_rcpp`, params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit, method)
+    .Call(`_CmultiJoint_dev_optim_rcpp`, params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit, method)
 }
 
 runit <- function(k, Yarray, nrint, ntint) {
-    .Call(`_CmultiJoint.dev_runit`, k, Yarray, nrint, ntint)
+    .Call(`_CmultiJoint_dev_runit`, k, Yarray, nrint, ntint)
 }
 
