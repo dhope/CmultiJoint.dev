@@ -81,7 +81,7 @@ simulate_single_point_count <- function(tau, phi,
    # Data to analyze
   
   
-  return( list (Y=Y,rint =rint,tint= tint))
+  return( list(Y = Y,rint = rint,tint = tint))
   
   
 }
@@ -121,7 +121,6 @@ simulate_point_counts <- function(survey_data_frame){
   # -------------------------------------------------
   # Arrays to store point count data
   # -------------------------------------------------
-  browser()
   Yarray <- abind::abind(surveys$Y, along = 3) |> 
     aperm(c(3,1,2))
   rarray <-  surveys$rint |> 
