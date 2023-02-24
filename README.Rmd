@@ -1,0 +1,55 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# CmultiJoint.dev
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of CmultiJoint.dev is to develop functions around bird density modelling.
+See https://github.com/davidiles/Bird_Detectability for details and usage cases.
+
+## Installation
+
+You can install the development version of CmultiJoint.dev from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("dhope/CmultiJoint.dev")
+```
+
+
+
+## Usage
+
+Basic usage is shown below. An example for creation of objects will be added shortly:
+
+```{r example, eval=F}
+library(CmultiJoint.dev)
+
+fit <- cmulti_fit_joint(Yarray,
+                           rarray,
+                           tarray,
+                           X1 = X1, # Design matrix for tau
+                           X2 = X2  # Design matrix for phi
+)
+log_offsetscpp <- calculate_offsets(fit,
+                                    rarray = rarray,
+                                    tarray = tarray,
+                                    X1 = X1,
+                                    X2 = X2)
+```
+
+
