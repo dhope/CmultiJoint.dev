@@ -1,7 +1,7 @@
 Package: CmultiJoint.dev
 Type: Package
 Title: What the package does (short line)
-Version: 0.0.1
+Version: 0.0.2
 Date: 2023-02-19
 Author: David Iles
 Maintainer: David Hope
@@ -14,4 +14,9 @@ Imports:
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen,RcppNumerical, RcppNumerical
 RoxygenNote: 7.2.3
 Suggests: 
-    dplyr
+    abind,
+    dplyr,
+    tidyr
+Depends: 
+    R (>= 2.10)
+LazyData: true

@@ -1,12 +1,32 @@
+#' simulate_single_point_count
+#'
+#' @param tau 
+#' @param phi 
+#' @param Density 
+#' @param distance_protocols 
+#' @param time_protocols 
+#' @param seed 
+#' @param mdbin 
+#' @param mtbin 
+#' @param dim 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 simulate_single_point_count <- function(tau, phi,
                                         Density,
                                         distance_protocols,
                                         time_protocols,
-                                        seed,
+                                        seed,mdbin,mtbin,
                                         dim = 10,# landscape x and y dimensions (100 metre increments)
                                         ...){
   if(!requireNamespace("dplyr", quietly = TRUE)){
     stop("This function requires dplyr. Please install it first.")
+  }
+  if(!requireNamespace("tidyr", quietly = TRUE)){
+    stop("This function depends on tidyr. Please install it first.")
   }
   # Parameters for this survey
   tau_true <- tau
@@ -69,25 +89,46 @@ simulate_single_point_count <- function(tau, phi,
   
   rint <- distance_protocols
   tint <- time_protocols
-  # nrint <- length(rint)
-  # ntint <- length(tint)
+  nrint <- length(rint)
+  ntint <- length(tint)
   # browser()
   # Separate into distance and time bins
   dat$rint <- cut(dat$dist,c(0,rint))
   dat$tint <- cut(dat$time,c(0,tint))
   dat <- na.omit(dat)
   
-  Y <- table(dat[,c("rint","tint")]) |> as.matrix()
+  Y <- matrix(NA, nrow=mdbin, ncol =mtbin)
+  Y[1:nrint,1:ntint] <- table(dat[,c("rint","tint")]) |> as.matrix()
+  
+  
+  rmat <- matrix(NA,nrow = 1, ncol = mdbin)
+  tmat <- matrix(NA,nrow = 1,ncol =mtbin)
+  rmat[1,1:nrint] <- rint
+  tmat[1,1:ntint] <- tint
+  
    # Data to analyze
   
   
   
-  return( list(Y = Y,rint = rint,tint = tint))
+  return( list(Y = Y,rint = rmat,tint = tmat))
   
   
 }
 
 
+#' gen_survey_data_frame
+#'
+#' @param sim_rep 
+#' @param tau 
+#' @param phi 
+#' @param Density 
+#' @param distance_protocols 
+#' @param time_protocols 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 gen_survey_data_frame <- function(
   sim_rep,
   tau,
@@ -107,45 +148,60 @@ gen_survey_data_frame <- function(
 }
 
 
-simulate_point_counts <- function(survey_data_frame){
+#' simulate_point_counts
+#'
+#' @param survey_data_frame 
+#' @param ncores 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+simulate_point_counts <- function(survey_data_frame, ncores =1){
   if(!all(c("tau", "phi", "Density","distance_protocols", 
             "time_protocols", 
             "seed") %in% names(survey_data_frame))) 
             stop("simualate_point_counts requires the following columns:
                                           tau, phi, Density,distance_protocols, time_protocols, seed")
   
+  if(!requireNamespace("abind", quietly = TRUE)){
+    stop("This function depends on tidyr. Please install it first.")
+  }
+  # Maximum number of distance bins
+  mdbin <- sapply(distance_protocols,function(x) length(x)) |>  max()
+
+  # Maximum number of time bins
+  mtbin <- sapply(time_protocols,function(x) length(x)) |>  max()
+
   
-  # # Maximum number of distance bins
-  # mdbin <- sapply(distance_protocols,function(x) length(x)) %>% max()
-  # 
-  # # Maximum number of time bins
-  # mtbin <- sapply(time_protocols,function(x) length(x)) %>% max()
-  # 
-  # # -------------------------------------------------
-  # # Arrays to store point count data
-  # # -------------------------------------------------
-  # 
-  # Yarray <- array(NA,dim=c(nrow(survey_data_frame),mdbin,mtbin))
-  # rarray <- array(NA,dim=c(nrow(survey_data_frame),mdbin))
-  # tarray <- array(NA,dim=c(nrow(survey_data_frame),mtbin))
-  
-  
+  if(ncores ==1){
   surveys <- 
     purrr::pmap(survey_data_frame,
-                simulate_single_point_count ) |> 
+                simulate_single_point_count, mdbin = mdbin, mtbin = mtbin ) |> 
     purrr::transpose()
-  browser()
+  }else{
+    if(!requireNamespace("furrr", quietly = TRUE)){
+      stop("Use of multiple cores requires {{furrr}}. Please install it first or set ncores=1.")
+    }
+      future::plan(future::multisession, workers = ncores)
+      
+      surveys <- 
+        furrr::future_pmap(survey_data_frame,
+                    simulate_single_point_count, mdbin = mdbin, mtbin = mtbin ) |> 
+        purrr::transpose()
+      future::plan(future::sequential)
+  }
+  
+
   # -------------------------------------------------
   # Arrays to store point count data
   # -------------------------------------------------
   Yarray <- abind::abind(surveys$Y, along = 3) |> 
     aperm(c(3,1,2))
   rarray <-  surveys$rint |> 
-    abind::abind(along = 2) |> 
-    aperm(c(2,1))
+    abind::abind(along = 1) 
   tarray <- surveys$tint |> 
-    abind::abind(along = 2) |> 
-    aperm(c(2,1))
+    abind::abind(along = 1) 
   
   return(list(Yarray=Yarray, rarray=rarray, tarray=tarray))
   

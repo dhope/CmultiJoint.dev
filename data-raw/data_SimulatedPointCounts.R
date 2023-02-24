@@ -23,6 +23,7 @@ survey_data_frame <-
                         time_protocols = time_protocols) 
   survey_data_frame$seed = 1:nrow(survey_data_frame) 
 
-SimulatedPointCounts <- simulate_point_counts(survey_data_frame)
+SimulatedPointCounts <- simulate_point_counts(survey_data_frame,
+                                              ncores = floor(parallel::detectCores()/2) )
 
 usethis::use_data(SimulatedPointCounts, overwrite = TRUE)
