@@ -67,18 +67,19 @@ simulate_single_point_count <- function(tau, phi,
   # Transcription: distance and time bins
   # ------------------------------------
   
-  rint <- sample(distance_protocols,1)[[1]]
-  tint <- sample(time_protocols,1)[[1]]
-  nrint <- length(rint)
-  ntint <- length(tint)
-  
+  rint <- distance_protocols
+  tint <- time_protocols
+  # nrint <- length(rint)
+  # ntint <- length(tint)
+  # browser()
   # Separate into distance and time bins
   dat$rint <- cut(dat$dist,c(0,rint))
   dat$tint <- cut(dat$time,c(0,tint))
   dat <- na.omit(dat)
   
-  Y <- table(dat[,c("rint","tint")])
+  Y <- table(dat[,c("rint","tint")]) |> as.matrix()
    # Data to analyze
+  
   
   
   return( list(Y = Y,rint = rint,tint = tint))
@@ -113,11 +114,27 @@ simulate_point_counts <- function(survey_data_frame){
             stop("simualate_point_counts requires the following columns:
                                           tau, phi, Density,distance_protocols, time_protocols, seed")
   
+  
+  # # Maximum number of distance bins
+  # mdbin <- sapply(distance_protocols,function(x) length(x)) %>% max()
+  # 
+  # # Maximum number of time bins
+  # mtbin <- sapply(time_protocols,function(x) length(x)) %>% max()
+  # 
+  # # -------------------------------------------------
+  # # Arrays to store point count data
+  # # -------------------------------------------------
+  # 
+  # Yarray <- array(NA,dim=c(nrow(survey_data_frame),mdbin,mtbin))
+  # rarray <- array(NA,dim=c(nrow(survey_data_frame),mdbin))
+  # tarray <- array(NA,dim=c(nrow(survey_data_frame),mtbin))
+  
+  
   surveys <- 
     purrr::pmap(survey_data_frame,
                 simulate_single_point_count ) |> 
     purrr::transpose()
-  
+  browser()
   # -------------------------------------------------
   # Arrays to store point count data
   # -------------------------------------------------
