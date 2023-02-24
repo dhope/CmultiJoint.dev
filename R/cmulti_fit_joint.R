@@ -93,13 +93,7 @@ cmulti_fit_joint <- function (Yarray, # Array with dimensions (nsurvey x nrint x
                     X1=X1, X2=X2, tau_params=tau_params, nsurvey=nsurvey, 
                     Yarray = Yarray_x,tarray= tarray, rarray=rarray, 
                     nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit)
-    # browser()
-    
-    # optim(inits, nll_fun, method = method, hessian = TRUE,
-    #            X1=X1, X2=X2, tau_params=tau_params, nsurvey=nsurvey, 
-    #            Yarray = Yarray_x,tarray= tarray, rarray=rarray, 
-    #            nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit)
-  
+
   rval <- list(input_data = input_data,
                coefficients = res$par, 
                vcov = try(.solvenear(res$hessian)),
