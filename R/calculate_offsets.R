@@ -1,6 +1,7 @@
 #' Calculate Offsets
 #'
-#' @param fit 
+#' @param fit
+#' @param Yarray 
 #' @param rarray 
 #' @param tarray 
 #' @param X1 
@@ -11,6 +12,7 @@
 #'
 #' @examples
 calculate_offsets <- function (fit,
+                               Yarray,
                                rarray = rarray,
                                tarray = tarray,
                                X1 = NULL,
