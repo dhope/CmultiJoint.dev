@@ -9,6 +9,8 @@
 #' @param maxdistint 
 #' @param tau_inits 
 #' @param phi_inits 
+#' @param use_weibull Logical. Do you want to use the Weibull or Exponentional Function
+#' @param weibull_init Initial value for weibull. Set to 1 (exponential) if left as NULL
 #' @param method 
 #' @param ... 
 #'
