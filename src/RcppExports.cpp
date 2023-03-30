@@ -26,8 +26,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // optim_rcpp
-Rcpp::List optim_rcpp(arma::vec& params, const arma::mat& X1, const arma::mat& X2, const Rcpp::StringVector& tau_params, const int& nsurvey, const arma::cube& Yarray, const arma::mat& tarray, const arma::mat& rarray, const arma::ivec& nrint, const arma::ivec& ntint, const arma::vec& max_r, const arma::ivec& Ysum, const arma::vec& nlimit, const Rcpp::String method);
-RcppExport SEXP _CmultiJoint_dev_optim_rcpp(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP, SEXP methodSEXP) {
+Rcpp::List optim_rcpp(arma::vec& params, const arma::mat& X1, const arma::mat& X2, const Rcpp::StringVector& tau_params, const int& nsurvey, const arma::cube& Yarray, const arma::mat& tarray, const arma::mat& rarray, const arma::ivec& nrint, const arma::ivec& ntint, const arma::vec& max_r, const arma::ivec& Ysum, const arma::vec& nlimit, const bool& use_weibull, const Rcpp::String method);
+RcppExport SEXP _CmultiJoint_dev_optim_rcpp(SEXP paramsSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP tau_paramsSEXP, SEXP nsurveySEXP, SEXP YarraySEXP, SEXP tarraySEXP, SEXP rarraySEXP, SEXP nrintSEXP, SEXP ntintSEXP, SEXP max_rSEXP, SEXP YsumSEXP, SEXP nlimitSEXP, SEXP use_weibullSEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,8 +44,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::vec& >::type max_r(max_rSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type Ysum(YsumSEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type nlimit(nlimitSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type use_weibull(use_weibullSEXP);
     Rcpp::traits::input_parameter< const Rcpp::String >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(optim_rcpp(params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit, method));
+    rcpp_result_gen = Rcpp::wrap(optim_rcpp(params, X1, X2, tau_params, nsurvey, Yarray, tarray, rarray, nrint, ntint, max_r, Ysum, nlimit, use_weibull, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -66,7 +67,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_CmultiJoint_dev_logdmultinomCPP", (DL_FUNC) &_CmultiJoint_dev_logdmultinomCPP, 3},
-    {"_CmultiJoint_dev_optim_rcpp", (DL_FUNC) &_CmultiJoint_dev_optim_rcpp, 14},
+    {"_CmultiJoint_dev_optim_rcpp", (DL_FUNC) &_CmultiJoint_dev_optim_rcpp, 15},
     {"_CmultiJoint_dev_runit", (DL_FUNC) &_CmultiJoint_dev_runit, 4},
     {NULL, NULL, 0}
 };

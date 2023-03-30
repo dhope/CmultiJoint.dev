@@ -24,6 +24,8 @@ cmulti_fit_joint <- function (Yarray, # Array with dimensions (nsurvey x nrint x
                               maxdistint = 10, # Max distance for numerical integration
                               tau_inits = NULL, 
                               phi_inits = NULL,
+                              use_weibull = FALSE,
+                              weibull_init = NULL,
                               method = "Nelder-Mead", ...) {
   
  
@@ -81,8 +83,14 @@ cmulti_fit_joint <- function (Yarray, # Array with dimensions (nsurvey x nrint x
     phi_inits <- rep(0, ncol(X2))
     names(phi_inits) <- phi_params
   }
-  
-  inits <- c(tau_inits,phi_inits)
+  if(isTRUE(use_weibull)){
+    if(length(weibull_init)!=1) weibull_init <- NULL
+    if(is.null(weibull_init)){
+      weibull_init <- 1
+     
+    }
+    inits <- c(weibull_init,tau_inits,phi_inits)
+  } else{  inits <- c(tau_inits,phi_inits) }
   
   
 
@@ -92,15 +100,23 @@ cmulti_fit_joint <- function (Yarray, # Array with dimensions (nsurvey x nrint x
   res <- optim_rcpp(inits, method = method, 
                     X1=X1, X2=X2, tau_params=tau_params, nsurvey=nsurvey, 
                     Yarray = Yarray_x,tarray= tarray, rarray=rarray, 
-                    nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit)
+                    nrint= nrint, ntint= ntint, max_r= max_r, Ysum=Ysum,nlimit= nlimit, use_weibull = use_weibull)
+  
+  coef <- c(t(res$par)) # covert to vector
+  if(isTRUE(use_weibull)){ # add names
+    names(coef) <- c("weibull_k", tau_params, phi_params)
+  } else{
+    names(coef) <- c( tau_params, phi_params)
+  }
+  # browser()
 
   rval <- list(input_data = input_data,
-               coefficients = res$par, 
+               coefficients = coef, 
                vcov = try(.solvenear(res$hessian)),
                loglik = -res$value)
   
   if (inherits(rval$vcov, "try-error")) rval$vcov <- matrix(NA, length(rval$coefficients), length(rval$coefficients))
-  rval$coefficients <- unname(rval$coefficients)
+  # rval$coefficients <- unname(rval$coefficients)
   rval$vcov <- unname(rval$vcov)
   rval$results <- res
   rval

@@ -43,7 +43,7 @@ fit <- cmulti_fit_joint(Yarray = CmultiJoint.dev::SimulatedPointCounts$Yarray,
                         rarray =CmultiJoint.dev::SimulatedPointCounts$rarray,
                         tarray = CmultiJoint.dev::SimulatedPointCounts$tarray,
                            X1 =NULL, # Design matrix for tau
-                           X2 =NULL, # Design matrix for phi
+                           X2 =NULL# Design matrix for phi
 )
 log_offsetscpp <- 
   calculate_offsets(fit,

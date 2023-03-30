@@ -38,14 +38,16 @@ class f_d_CPP: public Func
 private: 
   double phi_k;
   double tau_k;
+  double k;
   double tmax;
 public:
-  f_d_CPP( double phi_k_, double tau_k_, double tmax_) : phi_k(phi_k_), tau_k(tau_k_), tmax(tmax_) {}
+  f_d_CPP( double phi_k_, double tau_k_,double k_, double tmax_) : 
+        phi_k(phi_k_), tau_k(tau_k_), k(k_), tmax(tmax_) {}
   
   double operator()(const double& dmax) const
   
   {
-    return 2*M_PI*dmax *(1-exp(-phi_k*tmax*exp(-pow(dmax,2) / pow(tau_k,2) ) ));
+    return 2*M_PI*dmax *(1-exp(-1* pow(phi_k*tmax*exp(-pow(dmax,2) / pow(tau_k,2) ),k) ) );
   }
 };
 
@@ -67,7 +69,7 @@ arma::imat calculateY(const int& k, const arma::cube& Yarray,
 
 Rcpp::List  calc_p_mat(const double& tau_k, 
                        const double& phi_k,
-                       // arma::mat Y_mat_slice,
+                       const double& weibull_k,
                       const int& nrint_k, 
                       const int& ntint_k,
                       const arma::rowvec& tarray_k,
@@ -86,7 +88,7 @@ Rcpp::List  calc_p_mat(const double& tau_k,
       if(upper_r_t == R_PosInf) upper_r_t = max_r_k;
       double upper_r = upper_r_t;
      
-      f_d_CPP f(phi_k,tau_k,tmax);
+      f_d_CPP f(phi_k,tau_k,weibull_k,tmax);
        double lower_limit = 0.01;
       double err_est;
       int err_code;
@@ -165,12 +167,22 @@ double nll_fun(arma::vec& params, const arma::mat& X1,
             const arma::ivec& ntint,
             const arma::vec& max_r,
             const arma::ivec& Ysum,
-            const arma::vec& nlimit
+            const arma::vec& nlimit,
+            const bool& use_weibull
              ){
-  arma::vec sub_v = params(arma::span(0, tau_params.size()-1));
-  // arma::vec sub_v = Rcpp::as<arma::vec>(subset);
-  arma::vec sub_v_phi = params(arma::span(tau_params.size(), params.size()-1));
-  // arma::vec sub_v_phi = Rcpp::as<arma::vec>(subset_phi);
+  double weibull_k;
+  arma::vec sub_v;
+  arma::vec sub_v_phi;
+  
+  if(use_weibull){
+  weibull_k = params(0);
+  sub_v = params(arma::span(1, tau_params.size()));
+  sub_v_phi = params(arma::span(tau_params.size()+1, params.size()-1));
+  } else{
+    weibull_k = 1.0;
+    sub_v = params(arma::span(0, tau_params.size()-1));
+    sub_v_phi = params(arma::span(tau_params.size(), params.size()-1));
+  }
 
   arma::vec tau = exp(X1 * sub_v );
   arma::vec phi = exp(X2 * sub_v_phi );
@@ -182,6 +194,7 @@ double nll_fun(arma::vec& params, const arma::mat& X1,
   for(int k = 0; k < nsurvey; ++k){
         Rcpp::List pmat_out = calc_p_mat(tau(k), 
                                          phi(k),
+                                         weibull_k,
                                         nrint(k), 
                                          ntint(k),
                                          tarray.row(k),
@@ -231,6 +244,7 @@ Rcpp::List optim_rcpp(arma::vec& params, const arma::mat& X1,
                      const arma::vec& max_r,
                      const arma::ivec& Ysum,
                      const arma::vec& nlimit,
+                     const bool& use_weibull,
                      const Rcpp::String method){
   // Extract R's optim function
   Rcpp::Environment stats("package:stats");
@@ -255,7 +269,8 @@ Rcpp::List optim_rcpp(arma::vec& params, const arma::mat& X1,
                                  Rcpp::_["ntint"]= ntint, 
                                  Rcpp::_["max_r"]= max_r,
                                  Rcpp::_["Ysum"]=Ysum,
-                                 Rcpp::_["nlimit"]= nlimit);
+                                 Rcpp::_["nlimit"]= nlimit,
+                                 Rcpp::_["use_weibull"]= use_weibull);
 
   // Extract out the estimated parameter values
   // arma::vec out = Rcpp::as<arma::vec>(opt_results[0]);
